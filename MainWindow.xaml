@@ -2,11 +2,11 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:affdexMe="clr-namespace:AffdexMe;assembly="
-        Title="AffdexMe" 
-        Height="720" Width="1280"
+        Title="Ministry of Health - Emotion Pilot" 
+        Height="600" Width="720"
         MinHeight="640" MinWidth="480"
         MaxHeight="720" MaxWidth="1280"
-        ResizeMode="NoResize"
+        ResizeMode="CanResizeWithGrip"
         
         Loaded="Window_Loaded"
         Closing="Window_Closing">
@@ -52,7 +52,7 @@
             <Setter Property="Height" Value="30"/>
             <Setter Property="MinWidth" Value="20"/>
             <Setter Property="FontSize" Value="11"/>
-            
+
             <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -141,7 +141,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <Style TargetType="TextBlock">
             <Setter Property="Margin" Value="0,10,0,0"/>
             <Setter Property="FontSize" Value="14"/>
@@ -177,15 +177,15 @@
 
             <StackPanel Name="stackPanelImage" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
 
-                <Grid Name="gridAffdexFaceDisplay" VerticalAlignment="Stretch" Width="1280" Height="720" >
+                <Grid Name="gridAffdexFaceDisplay" VerticalAlignment="Stretch" Width="720" Height="720" >
                     <Grid x:Name="cameraDisplayGrid" Visibility="Collapsed">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Image Grid.Column="1" Name="cameraDisplay" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Right" Stretch="UniformToFill"/>
-                        
+                        <Image Grid.Column="1" Name="cameraDisplay" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Right" Stretch="Uniform"/>
+
                         <Border Grid.Column="0" x:Name="UserInfoPanel2" VerticalAlignment="Center" HorizontalAlignment="Left" Visibility="Collapsed" BorderThickness="1" Background="White" 
                                     BorderBrush="LightGray" CornerRadius="5" Padding="20" Margin="20,0">
                             <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -221,59 +221,59 @@
                     <!--<Image Name="logoBackground" Margin="40,40,40,85" Width="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                             Height="auto" Source="Resources\AffectivaLogo1.png" Visibility="Visible"/>-->
 
-                    
+
                     <ScrollViewer VerticalScrollBarVisibility="Visible"
                                   HorizontalScrollBarVisibility="Disabled"
                                   Padding="0,0,0,0"
                                   CanContentScroll="True"
                                   x:Name="LoginRegForm">
                         <Grid>
-                            <StackPanel Orientation="Horizontal" Name="logoBackground" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" Name="logoBackground" VerticalAlignment="Center" Margin="127,80,0,361" HorizontalAlignment="Left" Width="462">
                                 <Border BorderThickness="1" Visibility="Collapsed" x:Name="RegistrationForm" Margin="20,0,0,0" Background="White" BorderBrush="LightGray" 
                                         CornerRadius="5" Padding="20" HorizontalAlignment="Center">
-                                <StackPanel Orientation="Vertical">
+                                    <StackPanel Orientation="Vertical">
                                         <TextBlock Text="Employee Registration Form" FontSize="18" Foreground="#70CC9E" Margin="0,0,0,10"/>
                                         <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                                        <TextBlock Text="Name:" VerticalAlignment="Top"/>
-                                        <TextBox x:Name="EmpNmeBx" Width="400" VerticalAlignment="Top" AcceptsReturn="False" VerticalContentAlignment="Center"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Vertical" Grid.Row="2" HorizontalAlignment="Center">
-                                        <TextBlock Text="Password:" VerticalAlignment="Top"/>
-                                        <PasswordBox x:Name="PswrdBx" Width="400" VerticalAlignment="Top" VerticalContentAlignment="Center"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Vertical" Grid.Row="2" HorizontalAlignment="Center">
-                                        <TextBlock Text="Re-Password:" VerticalAlignment="Top"/>
-                                        <PasswordBox x:Name="PswrdBx2" Width="400" VerticalAlignment="Top" VerticalContentAlignment="Center"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                                        <TextBlock Text="Email:" VerticalAlignment="Top"/>
-                                        <TextBox x:Name="EmpMailBx" Width="400" VerticalAlignment="Top" AcceptsReturn="False" VerticalContentAlignment="Center"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock Text="Phone Number:" VerticalAlignment="Top"/>
-                                        <TextBox x:Name="EmpNumBx" Width="400" VerticalAlignment="Top" AcceptsReturn="False" VerticalContentAlignment="Center"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                                        <TextBlock Text="Position/ Title:" VerticalAlignment="Top"/>
-                                        <TextBox x:Name="EmpPositionBx" Width="400" VerticalAlignment="Top" AcceptsReturn="False" VerticalContentAlignment="Center"/>
-                                    </StackPanel>
-                                    <Button x:Name="Reg_Btn" Content="Register" Click="Register_Btn_Click" Margin="0,10,0,0" Width="100"
+                                            <TextBlock Text="Name:" VerticalAlignment="Top"/>
+                                            <TextBox x:Name="EmpNmeBx" Width="400" VerticalAlignment="Top" AcceptsReturn="False" VerticalContentAlignment="Center"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical" Grid.Row="2" HorizontalAlignment="Center">
+                                            <TextBlock Text="Password:" VerticalAlignment="Top"/>
+                                            <PasswordBox x:Name="PswrdBx" Width="400" VerticalAlignment="Top" VerticalContentAlignment="Center"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical" Grid.Row="2" HorizontalAlignment="Center">
+                                            <TextBlock Text="Re-Password:" VerticalAlignment="Top"/>
+                                            <PasswordBox x:Name="PswrdBx2" Width="400" VerticalAlignment="Top" VerticalContentAlignment="Center"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                                            <TextBlock Text="Email:" VerticalAlignment="Top"/>
+                                            <TextBox x:Name="EmpMailBx" Width="400" VerticalAlignment="Top" AcceptsReturn="False" VerticalContentAlignment="Center"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock Text="Phone Number:" VerticalAlignment="Top"/>
+                                            <TextBox x:Name="EmpNumBx" Width="400" VerticalAlignment="Top" AcceptsReturn="False" VerticalContentAlignment="Center"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                                            <TextBlock Text="Position/ Title:" VerticalAlignment="Top"/>
+                                            <TextBox x:Name="EmpPositionBx" Width="400" VerticalAlignment="Top" AcceptsReturn="False" VerticalContentAlignment="Center"/>
+                                        </StackPanel>
+                                        <Button x:Name="Reg_Btn" Content="Register" Click="Register_Btn_Click" Margin="0,10,0,0" Width="100"
                                             HorizontalAlignment="Right"/>
                                         <Button Content="Login" Click="ViewLogin_Btn_Click" Margin="0,10,0,0" Width="100"
                                             HorizontalAlignment="Right"/>
                                     </StackPanel>
                                 </Border>
                                 <Border BorderThickness="1" Margin="20,0,0,0" x:Name="LoginForm" Background="White" BorderBrush="LightGray" CornerRadius="5" Padding="20">
-                                <StackPanel Orientation="Vertical">
-                                        <TextBlock Text="Employee Login Form" FontSize="18" Foreground="#70CC9E" Margin="0,0,0,10"/>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Customer Service Login" FontSize="18" Foreground="#70CC9E" Margin="0,0,0,10"/>
                                         <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                                        <TextBlock Text="Name:" VerticalAlignment="Top"/>
-                                        <TextBox x:Name="LgnNmeBx" Width="400" VerticalAlignment="Top" AcceptsReturn="False" VerticalContentAlignment="Center"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Vertical" Grid.Row="2" HorizontalAlignment="Center">
-                                        <TextBlock Text="Password:" VerticalAlignment="Top"/>
-                                        <PasswordBox x:Name="LgnPswrdBx" Width="400" VerticalAlignment="Top" VerticalContentAlignment="Center"/>
-                                    </StackPanel>
+                                            <TextBlock Text="Name:" VerticalAlignment="Top"/>
+                                            <TextBox x:Name="LgnNmeBx" Width="400" VerticalAlignment="Top" AcceptsReturn="False" VerticalContentAlignment="Center"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical" Grid.Row="2" HorizontalAlignment="Center">
+                                            <TextBlock Text="Password:" VerticalAlignment="Top"/>
+                                            <PasswordBox x:Name="LgnPswrdBx" Width="400" VerticalAlignment="Top" VerticalContentAlignment="Center"/>
+                                        </StackPanel>
                                         <StackPanel Orientation="Vertical" HorizontalAlignment="Right">
                                             <Button x:Name="Login_Btn" Content="Login" Click="Login_Btn_Click" Margin="0,10,0,0" Width="100"/>
                                             <Button Content="Register" Click="ViewRegistration_Btn_Click" Margin="0,10,0,0" Width="100"/>
