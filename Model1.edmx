@@ -1,0 +1,410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EffectivaTestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Emp_ID" />
+          </Key>
+          <Property Name="Emp_ID" Type="int" Nullable="false" />
+          <Property Name="Emp_Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Emp_Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="Emp_Contact_Num" Type="nvarchar" MaxLength="50" />
+          <Property Name="Emp_Position_Title" Type="nvarchar" MaxLength="100" />
+          <Property Name="Emp_Password" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Shots">
+          <Key>
+            <PropertyRef Name="Shot_ID" />
+          </Key>
+          <Property Name="Shot_ID" Type="int" Nullable="false" />
+          <Property Name="Score_Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="Score_Value" Type="float" Nullable="false" />
+          <Property Name="User_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Shot_Seq_Num" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Visit_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="User_Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="User_Email" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="UserPhone">
+          <Key>
+            <PropertyRef Name="User_ID" />
+            <PropertyRef Name="User_Phone_Num" />
+          </Key>
+          <Property Name="User_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="User_Phone_Num" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Visit">
+          <Key>
+            <PropertyRef Name="Visit_ID" />
+          </Key>
+          <Property Name="Visit_ID" Type="int" Nullable="false" />
+          <Property Name="Visit_Date" Type="date" Nullable="false" />
+          <Property Name="Visit_Time" Type="datetime" Nullable="false" />
+          <Property Name="User_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Emp_ID" Type="int" Nullable="false" />
+          <Property Name="Visit_Reason" Type="nvarchar(max)" />
+          <Property Name="Emotion_Summary" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EffectivaTest.dbo.myView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="myView">
+          <Key>
+            <PropertyRef Name="Emp_Name" />
+          </Key>
+          <Property Name="Emp_Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Number of Visits" Type="int" />
+        </EntityType>
+        <Association Name="FK_Shots_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Shots" Type="Self.Shots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Shots">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shots_Visit">
+          <End Role="Visit" Type="Self.Visit" Multiplicity="1" />
+          <End Role="Shots" Type="Self.Shots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visit">
+              <PropertyRef Name="Visit_ID" />
+            </Principal>
+            <Dependent Role="Shots">
+              <PropertyRef Name="Visit_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserPhone_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserPhone" Type="Self.UserPhone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="UserPhone">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visit_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Visit" Type="Self.Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="Emp_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visit_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Visit" Type="Self.Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EffectivaTestModelStoreContainer">
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Shots" EntityType="Self.Shots" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserPhone" EntityType="Self.UserPhone" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Visit" EntityType="Self.Visit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="myView" EntityType="Self.myView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [myView].[Emp_Name] AS [Emp_Name], 
+    [myView].[Number of Visits] AS [Number of Visits]
+    FROM [dbo].[myView] AS [myView]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Shots_User" Association="Self.FK_Shots_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Shots" EntitySet="Shots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shots_Visit" Association="Self.FK_Shots_Visit">
+            <End Role="Visit" EntitySet="Visit" />
+            <End Role="Shots" EntitySet="Shots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserPhone_User" Association="Self.FK_UserPhone_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserPhone" EntitySet="UserPhone" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visit_Employee" Association="Self.FK_Visit_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Visit" EntitySet="Visit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visit_User" Association="Self.FK_Visit_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Visit" EntitySet="Visit" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EffectivaTestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Emp_ID" />
+          </Key>
+          <Property Name="Emp_ID" Type="Int32" Nullable="false" />
+          <Property Name="Emp_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Emp_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Emp_Contact_Num" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Emp_Position_Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Visits" Relationship="Self.FK_Visit_Employee" FromRole="Employee" ToRole="Visit" />
+          <Property Name="Emp_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="Guid" Nullable="false" />
+          <Property Name="User_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="User_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserPhones" Relationship="Self.FK_UserPhone_User" FromRole="User" ToRole="UserPhone" />
+          <NavigationProperty Name="Visits" Relationship="Self.FK_Visit_User" FromRole="User" ToRole="Visit" />
+          <NavigationProperty Name="Shots" Relationship="EffectivaTestModel.FK_Shots_User" FromRole="User" ToRole="Shot" />
+        </EntityType>
+        <EntityType Name="UserPhone">
+          <Key>
+            <PropertyRef Name="User_ID" />
+            <PropertyRef Name="User_Phone_Num" />
+          </Key>
+          <Property Name="User_ID" Type="Guid" Nullable="false" />
+          <Property Name="User_Phone_Num" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserPhone_User" FromRole="UserPhone" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Visit">
+          <Key>
+            <PropertyRef Name="Visit_ID" />
+          </Key>
+          <Property Name="Visit_ID" Type="Int32" Nullable="false" />
+          <Property Name="Visit_Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Visit_Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="User_ID" Type="Guid" Nullable="false" />
+          <Property Name="Emp_ID" Type="Int32" Nullable="false" />
+          <Property Name="Visit_Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Emotion_Summary" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Visit_Employee" FromRole="Visit" ToRole="Employee" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Visit_User" FromRole="Visit" ToRole="User" />
+          <NavigationProperty Name="Shots" Relationship="EffectivaTestModel.FK_Shots_Visit" FromRole="Visit" ToRole="Shot" />
+        </EntityType>
+        <EntityType Name="myView">
+          <Key>
+            <PropertyRef Name="Emp_Name" />
+          </Key>
+          <Property Name="Emp_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Number_of_Visits" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_Visit_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Visit" Type="Self.Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="Emp_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserPhone_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserPhone" Type="Self.UserPhone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="UserPhone">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visit_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Visit" Type="Self.Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EffectivaTestEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UserPhones" EntityType="Self.UserPhone" />
+          <EntitySet Name="Visits" EntityType="Self.Visit" />
+          <EntitySet Name="myViews" EntityType="Self.myView" />
+          <AssociationSet Name="FK_Visit_Employee" Association="Self.FK_Visit_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Visit" EntitySet="Visits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserPhone_User" Association="Self.FK_UserPhone_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserPhone" EntitySet="UserPhones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visit_User" Association="Self.FK_Visit_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Visit" EntitySet="Visits" />
+          </AssociationSet>
+          <EntitySet Name="Shots" EntityType="EffectivaTestModel.Shot" />
+          <AssociationSet Name="FK_Shots_User" Association="EffectivaTestModel.FK_Shots_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Shot" EntitySet="Shots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shots_Visit" Association="EffectivaTestModel.FK_Shots_Visit">
+            <End Role="Visit" EntitySet="Visits" />
+            <End Role="Shot" EntitySet="Shots" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Shot">
+          <Key>
+            <PropertyRef Name="Shot_ID" />
+          </Key>
+          <Property Name="Shot_ID" Type="Int32" Nullable="false" />
+          <Property Name="Score_Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Score_Value" Type="Double" Nullable="false" />
+          <Property Name="User_ID" Type="Guid" Nullable="false" />
+          <Property Name="Shot_Seq_Num" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Visit_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="EffectivaTestModel.FK_Shots_User" FromRole="Shot" ToRole="User" />
+          <NavigationProperty Name="Visit" Relationship="EffectivaTestModel.FK_Shots_Visit" FromRole="Shot" ToRole="Visit" />
+        </EntityType>
+        <Association Name="FK_Shots_User">
+          <End Type="EffectivaTestModel.User" Role="User" Multiplicity="1" />
+          <End Type="EffectivaTestModel.Shot" Role="Shot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Shot">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shots_Visit">
+          <End Type="EffectivaTestModel.Visit" Role="Visit" Multiplicity="1" />
+          <End Type="EffectivaTestModel.Shot" Role="Shot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visit">
+              <PropertyRef Name="Visit_ID" />
+            </Principal>
+            <Dependent Role="Shot">
+              <PropertyRef Name="Visit_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EffectivaTestModelStoreContainer" CdmEntityContainer="EffectivaTestEntities">
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="EffectivaTestModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Emp_Password" ColumnName="Emp_Password" />
+                <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
+                <ScalarProperty Name="Emp_Name" ColumnName="Emp_Name" />
+                <ScalarProperty Name="Emp_Email" ColumnName="Emp_Email" />
+                <ScalarProperty Name="Emp_Contact_Num" ColumnName="Emp_Contact_Num" />
+                <ScalarProperty Name="Emp_Position_Title" ColumnName="Emp_Position_Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="EffectivaTestModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="User_Name" ColumnName="User_Name" />
+                <ScalarProperty Name="User_Email" ColumnName="User_Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserPhones">
+            <EntityTypeMapping TypeName="EffectivaTestModel.UserPhone">
+              <MappingFragment StoreEntitySet="UserPhone">
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="User_Phone_Num" ColumnName="User_Phone_Num" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Visits">
+            <EntityTypeMapping TypeName="EffectivaTestModel.Visit">
+              <MappingFragment StoreEntitySet="Visit">
+                <ScalarProperty Name="Visit_ID" ColumnName="Visit_ID" />
+                <ScalarProperty Name="Visit_Date" ColumnName="Visit_Date" />
+                <ScalarProperty Name="Visit_Time" ColumnName="Visit_Time" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
+                <ScalarProperty Name="Visit_Reason" ColumnName="Visit_Reason" />
+                <ScalarProperty Name="Emotion_Summary" ColumnName="Emotion_Summary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="myViews">
+            <EntityTypeMapping TypeName="EffectivaTestModel.myView">
+              <MappingFragment StoreEntitySet="myView">
+                <ScalarProperty Name="Emp_Name" ColumnName="Emp_Name" />
+                <ScalarProperty Name="Number_of_Visits" ColumnName="Number of Visits" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shots">
+            <EntityTypeMapping TypeName="EffectivaTestModel.Shot">
+              <MappingFragment StoreEntitySet="Shots">
+                <ScalarProperty Name="Visit_ID" ColumnName="Visit_ID" />
+                <ScalarProperty Name="Shot_Seq_Num" ColumnName="Shot_Seq_Num" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Score_Value" ColumnName="Score_Value" />
+                <ScalarProperty Name="Score_Title" ColumnName="Score_Title" />
+                <ScalarProperty Name="Shot_ID" ColumnName="Shot_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
