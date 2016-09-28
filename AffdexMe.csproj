@@ -55,6 +55,9 @@
   <PropertyGroup>
     <SignManifests>true</SignManifests>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <OutputPath>bin\x64\Debug\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Affdex, Version=3.0.0.961, Culture=neutral, processorArchitecture=x64">
       <SpecificVersion>False</SpecificVersion>
@@ -215,7 +218,9 @@
     <Resource Include="Resources\Square.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="$(ProjectDir)App.config" />
+    <None Include="$(ProjectDir)App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="$(ProjectDir)Resources\AffectivaLogo1.png" />
