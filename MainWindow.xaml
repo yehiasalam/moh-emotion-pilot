@@ -303,6 +303,10 @@
                                         <TextBlock Text="Other Phone Number" VerticalAlignment="Top"/>
                                         <TextBox x:Name="phnNumBx2" Width="400" VerticalAlignment="Top" AcceptsReturn="False" VerticalContentAlignment="Center"/>
                                     </StackPanel>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Select Camera" VerticalAlignment="Top"/>
+                                        <ComboBox x:Name="cbCam" Width="400" VerticalAlignment="Top" DisplayMemberPath="Value" SelectedValuePath="Key"  VerticalContentAlignment="Center"/>
+                                    </StackPanel>
                                     <Button Content="Start Session" Name="StartCameraBtn" Margin="0,10,0,0" Width="100"
                                             HorizontalAlignment="Right"/>
                                 </StackPanel>

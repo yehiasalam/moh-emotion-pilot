@@ -9,7 +9,9 @@ using System.Reflection;
 using System.Windows.Shapes;
 using System.IO;
 using System.Timers;
+using System.Windows.Documents;
 using System.Windows.Input;
+using DirectShowLib;
 
 
 namespace AffdexMe
@@ -21,7 +23,7 @@ namespace AffdexMe
     {
 
         double timerInterval = 10000;
-
+        private int _CameraIndex;
         public MainWindow()
         {
             InitializeComponent();
@@ -81,6 +83,8 @@ namespace AffdexMe
             changeButtonStyle(Metrics, AffdexMe.Settings.Default.ShowMetrics);
 
             this.ContentRendered += MainWindow_ContentRendered;
+
+            LoadAllWebCamList();
         }
 
         /// <summary>
@@ -345,7 +349,7 @@ namespace AffdexMe
                 btnStopCamera.IsEnabled = true;
 
                 // Instantiate CameraDetector using default camera ID
-                const int cameraId = 0;
+                int cameraId = int.Parse(cbCam.SelectedValue.ToString());
                 const int numberOfFaces = 10;
                 const int cameraFPS = 15;
                 const int processFPS = 15;
@@ -371,6 +375,9 @@ namespace AffdexMe
                 cornerLogo.Visibility = Visibility.Visible;
                 canvas.Visibility = Visibility.Visible;
                 cameraDisplay.Visibility = cameraDisplayGrid.Visibility = Visibility.Visible;
+
+                btnStopCamera.Visibility = Visibility.Visible;
+                BottomBar.Visibility = Visibility.Visible;
             }
             catch (Affdex.AffdexException ex)
             {
@@ -412,20 +419,33 @@ namespace AffdexMe
           //  ResetDisplayArea();
             isCameraStopped = true;
             DAC.VisitReason = reasonBx2.Text;
-            DAC.CloseVisitAndSaveChanges();
+            if (DAC.CloseVisitAndSaveChanges())
+            {
+                MessageBox.Show("The visit saved successfully");
+                btnResetCamera.IsEnabled =
+                    btnAppShot.IsEnabled =
+                        btnStopCamera.IsEnabled = false;
+                btnStopCamera.Visibility = Visibility.Collapsed;
+                BottomBar.Visibility = Visibility.Collapsed;
+                // Hide the logo, show the camera feed and the data canvas
+                //UserInfoPanel2.Visibility = Visibility.Collapsed;
+                StartCameraBtn.IsEnabled = true;
+                LoginRegForm.Visibility = Visibility.Visible;
+                logoBackground.Visibility = Visibility.Hidden;
+                UserInfoPanel.Visibility = Visibility.Visible;
+                cornerLogo.Visibility = Visibility.Hidden;
+                canvas.Visibility = Visibility.Hidden;
+                cameraDisplay.Visibility = cameraDisplayGrid.Visibility = Visibility.Hidden;
 
-          
-            btnResetCamera.IsEnabled =
-            btnAppShot.IsEnabled =
-            btnStopCamera.IsEnabled = false;
-
-            // Hide the logo, show the camera feed and the data canvas
-            StartCameraBtn.IsEnabled = true;
-            logoBackground.Visibility = Visibility.Visible;
-            UserInfoPanel.Visibility = Visibility.Visible;
-            cornerLogo.Visibility = Visibility.Hidden;
-            canvas.Visibility = Visibility.Hidden;
-            cameraDisplay.Visibility = cameraDisplayGrid.Visibility = Visibility.Hidden;
+                usrNmeBx.Text = "";
+                emailBx.Text = "";
+                phnNumBx.Text = "";
+                phnNumBx2.Text = "";
+            }
+            else
+            {
+                MessageBox.Show("Something went wrong, please try again");
+            }
         }
 
         /// <summary>
@@ -609,8 +629,13 @@ namespace AffdexMe
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void StartCameraBtn_Click(object sender, RoutedEventArgs e)
         {
+            int camID;
             if (String.IsNullOrEmpty(usrNmeBx.Text))
                 MessageBox.Show("User name must be entered");
+            else if(cbCam.SelectedValue == null || !(int.TryParse(cbCam.SelectedValue.ToString(), out  camID)))
+            {
+                MessageBox.Show("Please select a camera");
+            }
             else
             {
                 //Initialize
@@ -787,6 +812,23 @@ namespace AffdexMe
         {
             LoginForm.Visibility = Visibility.Visible;
             RegistrationForm.Visibility = Visibility.Collapsed;
+        }
+
+        private void LoadAllWebCamList()
+        {
+            //-> Create a List to store for ComboCameras
+            //List<KeyValuePair<int, string>> ListCamerasData = new List<KeyValuePair<int, string>>();
+
+            //-> Find systems cameras with DirectShow.Net dll 
+            DsDevice[] _SystemCamereas = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
+
+            int _DeviceIndex = 0;
+            foreach (DirectShowLib.DsDevice _Camera in _SystemCamereas)
+            {
+                //ListCamerasData.Add(new KeyValuePair<int, string>(_DeviceIndex, _Camera.Name));
+                cbCam.Items.Add(new KeyValuePair<int, string>(_DeviceIndex, _Camera.Name));
+                _DeviceIndex++;
+            }
         }
     }
 }

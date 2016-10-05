@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows;
 
 namespace AffdexMe
 {
@@ -43,7 +44,7 @@ namespace AffdexMe
             }
         }
 
-        public static void CloseVisitAndSaveChanges()
+        public static bool CloseVisitAndSaveChanges()
         {
             try
             {
@@ -71,11 +72,20 @@ namespace AffdexMe
 
                     DBDemoManager.SaveChanges();
                 }
+                return true;
             }
-            catch (Exception e)
+            catch
             {
-                //DBDemoManager.SaveChanges();
+                try
+                {
+                    DBDemoManager.SaveChanges();
+                }
+                catch
+                {
+                    
+                }
             }
+            return false;
         }
 
 
@@ -90,7 +100,7 @@ namespace AffdexMe
 
         public static void GetShotID()
         {
-            if (DBDemoManager.Shots.ToList().Count > 1)
+            if (DBDemoManager.Shots.ToList().Count > 0)
                 Shot_ID = DBDemoManager.Shots.ToList().Last().Shot_ID;
         }
 

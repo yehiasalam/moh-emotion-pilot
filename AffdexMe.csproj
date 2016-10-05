@@ -61,7 +61,10 @@
   <ItemGroup>
     <Reference Include="Affdex, Version=3.0.0.961, Culture=neutral, processorArchitecture=x64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Affectiva\Affdex SDK\bin\release\Affdex.dll</HintPath>
+      <HintPath>..\affex-project\debug\Affdex.dll</HintPath>
+    </Reference>
+    <Reference Include="DirectShowLib-2005">
+      <HintPath>C:\Users\Andrew_Safwat\Downloads\DirectShowLibV2-1\lib\DirectShowLib-2005.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -89,7 +92,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WpfAnimatedGif">
-      <HintPath>$(ProjectDir)packages\WpfAnimatedGif.1.4.13\lib\net\WpfAnimatedGif.dll</HintPath>
+      <HintPath>..\affex-project\debug\WpfAnimatedGif.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
