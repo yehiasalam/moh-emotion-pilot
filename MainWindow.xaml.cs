@@ -14,7 +14,7 @@ using System.Windows.Input;
 using DirectShowLib;
 
 
-namespace AffdexMe
+namespace MoHEmotionPilot
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

@@ -9,7 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using AffdexMe;
 using System.Diagnostics;
-namespace AffdexMe
+namespace MoHEmotionPilot
 {
     public class DrawingCanvas : System.Windows.Controls.Canvas
     {

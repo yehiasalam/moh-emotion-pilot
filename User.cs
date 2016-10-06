@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AffdexMe
+namespace MoHEmotionPilot
 {
     using System;
     using System.Collections.Generic;

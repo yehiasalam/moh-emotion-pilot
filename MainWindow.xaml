@@ -1,7 +1,7 @@
-﻿<Window x:Class="AffdexMe.MainWindow"
+﻿<Window x:Class="MoHEmotionPilot.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:affdexMe="clr-namespace:AffdexMe;assembly="
+        xmlns:moh="clr-namespace:MoHEmotionPilot;assembly="
         Title="Ministry of Health - Emotion Pilot" 
         Height="600" Width="720"
         MinHeight="640" MinWidth="480"
@@ -313,7 +313,7 @@
                             </Border>
                         </Grid>
                     </ScrollViewer>
-                    <affdexMe:DrawingCanvas x:Name="canvas" HorizontalAlignment="Center" VerticalAlignment="Center" Width="1" Height="1"/>
+                    <moh:DrawingCanvas x:Name="canvas" HorizontalAlignment="Center" VerticalAlignment="Center" Width="1" Height="1"/>
                     <!--<Label Name="appShotLocLabel" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource appShotLocLabelStyle}" />-->
                 </Grid>
             </StackPanel>

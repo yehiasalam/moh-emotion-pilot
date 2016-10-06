@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace AffdexMe
+namespace MoHEmotionPilot
 {
     public class NameToResourceConverter : System.Windows.Data.IValueConverter
     {
@@ -15,7 +15,7 @@ namespace AffdexMe
         {
             String classifier_name = SplitCamelCase(((String)value));
             classifier_name = classifier_name.ToLower().Replace(" ", "_");
-            return new Uri("pack://application:,,,/AffdexMe;component/Resources/" + classifier_name + "." +((String) parameter));
+            return new Uri("pack://application:,,,/MoHEmotionPilot;component/Resources/" + classifier_name + "." +((String) parameter));
             //return new Uri(String.Format("pack://application:,,,/{0}.jpg", ((String)value).ToLower()));
         }
 

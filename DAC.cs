@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 
-namespace AffdexMe
+namespace MoHEmotionPilot
 {
     public class DAC
     {

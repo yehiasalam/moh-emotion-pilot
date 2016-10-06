@@ -8,7 +8,7 @@ using System.Windows;
 
 using Microsoft.VisualBasic.ApplicationServices;
 
-namespace AffdexMe
+namespace MoHEmotionPilot
 {
     /// <summary>
     /// Interaction logic for App.xaml

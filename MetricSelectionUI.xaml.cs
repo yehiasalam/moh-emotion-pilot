@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WpfAnimatedGif;
 
-namespace AffdexMe
+namespace MoHEmotionPilot
 {
     /// <summary>
     /// Interaction logic for Window1.xaml
