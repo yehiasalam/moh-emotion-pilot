@@ -12,7 +12,9 @@ using System.Timers;
 using System.Windows.Documents;
 using System.Windows.Input;
 using DirectShowLib;
-
+using System.Threading.Tasks;
+using ToastNotifications;
+using System.ComponentModel;
 
 namespace MoHEmotionPilot
 {
@@ -22,13 +24,17 @@ namespace MoHEmotionPilot
     public partial class MainWindow : Window, Affdex.ImageListener, Affdex.ProcessStatusListener
     {
 
-        double timerInterval = 10000;
+        double timerInterval = 1000;
         private int _CameraIndex;
+        private readonly NotificationViewModel vm;
         public MainWindow()
         {
             InitializeComponent();
             CenterWindowOnScreen();
+            DataContext = vm = new NotificationViewModel();
         }
+
+
 
         /// <summary>
         /// Handles the Loaded event of the Window control.
@@ -37,7 +43,6 @@ namespace MoHEmotionPilot
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            
 
             Detector = null;
 
@@ -419,33 +424,40 @@ namespace MoHEmotionPilot
           //  ResetDisplayArea();
             isCameraStopped = true;
             DAC.VisitReason = reasonBx2.Text;
-            if (DAC.CloseVisitAndSaveChanges())
-            {
-                MessageBox.Show("The visit saved successfully");
-                btnResetCamera.IsEnabled =
-                    btnAppShot.IsEnabled =
-                        btnStopCamera.IsEnabled = false;
-                btnStopCamera.Visibility = Visibility.Collapsed;
-                BottomBar.Visibility = Visibility.Collapsed;
-                // Hide the logo, show the camera feed and the data canvas
-                //UserInfoPanel2.Visibility = Visibility.Collapsed;
-                StartCameraBtn.IsEnabled = true;
-                LoginRegForm.Visibility = Visibility.Visible;
-                logoBackground.Visibility = Visibility.Hidden;
-                UserInfoPanel.Visibility = Visibility.Visible;
-                cornerLogo.Visibility = Visibility.Hidden;
-                canvas.Visibility = Visibility.Hidden;
-                cameraDisplay.Visibility = cameraDisplayGrid.Visibility = Visibility.Hidden;
 
-                usrNmeBx.Text = "";
-                emailBx.Text = "";
-                phnNumBx.Text = "";
-                phnNumBx2.Text = "";
-            }
-            else
+            btnResetCamera.IsEnabled =
+                 btnAppShot.IsEnabled =
+                     btnStopCamera.IsEnabled = false;
+            btnStopCamera.Visibility = Visibility.Collapsed;
+            BottomBar.Visibility = Visibility.Collapsed;
+            // Hide the logo, show the camera feed and the data canvas
+            //UserInfoPanel2.Visibility = Visibility.Collapsed;
+            StartCameraBtn.IsEnabled = true;
+            LoginRegForm.Visibility = Visibility.Visible;
+            logoBackground.Visibility = Visibility.Hidden;
+            UserInfoPanel.Visibility = Visibility.Visible;
+            cornerLogo.Visibility = Visibility.Hidden;
+            canvas.Visibility = Visibility.Hidden;
+            cameraDisplay.Visibility = cameraDisplayGrid.Visibility = Visibility.Hidden;
+
+            usrNmeBx.Text = "";
+            emailBx.Text = "";
+            phnNumBx.Text = "";
+            phnNumBx2.Text = "";
+
+            Task<bool> pushAzure = DAC.CloseVisitAndSaveChanges();
+            vm.ShowInformation("Uploading Session Analysis...");
+            bool savedtoAzure = await pushAzure;
+            if (savedtoAzure)
             {
-                MessageBox.Show("Something went wrong, please try again");
+                vm.ShowInformation("Upload Complete.");
             }
+            else {
+                vm.ShowError("Failed to Upload Data. Please Check your Internet Connectivity.");
+            }
+  
+ 
+
         }
 
         /// <summary>
@@ -679,7 +691,7 @@ namespace MoHEmotionPilot
             if(!isCameraStopped)
                 DAC.AddShot(new Shot() { Score_Title = DAC.GetCurrentEmotion().Score_Title, Score_Value = DAC.GetCurrentEmotion().Score_Value, Shot_Seq_Num = (timerInterval / 1000).ToString() });
            
-            timerInterval += 10000;
+            timerInterval += 1000;
         }
 
         bool isCameraStopped = false;

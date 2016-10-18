@@ -2,6 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:moh="clr-namespace:MoHEmotionPilot;assembly="
+        xmlns:toast="clr-namespace:ToastNotifications;assembly=ToastNotifications"
         Title="Ministry of Health - Emotion Pilot" 
         Height="600" Width="720"
         MinHeight="640" MinWidth="480"
@@ -173,8 +174,18 @@
 
     <Grid Name="gridMainDisplay" Margin="0,0,0,0" Background="#F7F7F7">
 
-        <Grid Name="gridContentDisplay" DockPanel.Dock="Top">
+        <toast:NotificationTray NotificationsSource="{Binding NotificationSource}"
+                        PopupFlowDirection="RightUp"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right"  />
 
+
+
+
+        
+        <Grid Name="gridContentDisplay" DockPanel.Dock="Top">
+  
+            
             <StackPanel Name="stackPanelImage" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
 
                 <Grid Name="gridAffdexFaceDisplay" VerticalAlignment="Stretch" Width="720" Height="720" >

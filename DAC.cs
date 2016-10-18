@@ -44,11 +44,11 @@ namespace MoHEmotionPilot
             }
         }
 
-        public static bool CloseVisitAndSaveChanges()
+        public async static Task<bool> CloseVisitAndSaveChanges()
         {
             try
             {
-                DBDemoManager.SaveChanges();
+                await DBDemoManager.SaveChangesAsync();
 
                 if (!String.IsNullOrEmpty(VisitReason))
                 {
@@ -70,7 +70,7 @@ namespace MoHEmotionPilot
 
                     DBDemoManager.Visits.Where(vs => vs.Visit_ID == Visit_ID).FirstOrDefault().Emotion_Summary = EmotionSummary;
 
-                    DBDemoManager.SaveChanges();
+                    await DBDemoManager.SaveChangesAsync();
                 }
                 return true;
             }
@@ -78,7 +78,7 @@ namespace MoHEmotionPilot
             {
                 try
                 {
-                    DBDemoManager.SaveChanges();
+                    await DBDemoManager.SaveChangesAsync();
                 }
                 catch
                 {
